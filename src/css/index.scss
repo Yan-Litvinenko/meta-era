@@ -1,5 +1,6 @@
 @import './reset.scss';
 @import './fonts.scss';
+@import './variables.scss';
 
 *,
 *::before,
@@ -9,6 +10,14 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--main-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 a {
@@ -29,7 +38,9 @@ ol {
     list-style: none;
 }
 
-.container {
+.wrapper {
     margin: 0 auto;
+    max-width: 1400px;
+    padding: 0px 20px;
     width: 100%;
 }

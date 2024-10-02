@@ -21,6 +21,22 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+        },
+        proxy: [
+            {
+                context: ['/'],
+                target: 'http://localhost:3000',
+                secure: false,
+            },
+        ],
+        port: 8080,
+        open: true,
+        hot: true,
+        historyApiFallback: true,
+    },
     module: {
         rules: [
             {
