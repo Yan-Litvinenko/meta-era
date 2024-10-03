@@ -4,7 +4,6 @@ import path from 'path';
 import { authorization } from './srv/routes';
 
 const app = express();
-
 const PORT: number = 3000;
 
 (async () => {
@@ -12,7 +11,7 @@ const PORT: number = 3000;
         app.use(express.json());
         app.use(express.static(path.join(__dirname, 'dist')));
 
-        app.post('/authorization', authorization);
+        app.post('/api/authorization', authorization);
 
         app.get('*', (_: Request, res: Response) => {
             res.sendFile(path.join(__dirname, 'dist', 'index.html'));

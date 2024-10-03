@@ -1,12 +1,6 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: [
-        '@typescript-eslint',
-        'prettier',
-        'import',
-        'react',
-        'react-compiler',
-    ],
+    plugins: ['@typescript-eslint', 'prettier', 'import', 'react', 'react-compiler'],
     extends: ['airbnb-typescript', 'plugin:prettier/recommended'],
     env: {
         browser: true,
@@ -25,26 +19,18 @@ module.exports = {
             {
                 selector: 'variable',
                 modifiers: ['const'],
-                format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+                format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
             },
         ],
         'no-use-before-define': 'off',
-        '@typescript-eslint/no-use-before-define': [
-            'error',
-            { functions: false },
-        ],
+        '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
         'no-debugger': 'off',
         'no-console': 'off',
         'class-methods-use-this': 'off',
-        'newline-per-chained-call': 'error',
         'comma-spacing': ['error', { before: false, after: true }],
         'object-curly-spacing': ['error', 'always'],
         'comma-dangle': ['error', 'always-multiline'],
-        'lines-between-class-members': [
-            'error',
-            'always',
-            { exceptAfterSingleLine: true },
-        ],
+        'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
         'prettier/prettier': 'error',
     },
 };

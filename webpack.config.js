@@ -41,20 +41,11 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                ],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
-                ],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
             },
             {
                 test: /\.(mp3|wav)$/i,
@@ -85,10 +76,7 @@ function optimization() {
     };
 
     if (isProd) {
-        config.minimizer = [
-            new TerserWebpackPlugin(),
-            new CssMinimizerWebpackPlugin(),
-        ];
+        config.minimizer = [new TerserWebpackPlugin(), new CssMinimizerWebpackPlugin()];
     }
 
     return config;

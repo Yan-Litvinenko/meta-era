@@ -1,0 +1,45 @@
+.list {
+    border-bottom: 3px solid var(--bg-content);
+    border-top: 3px solid var(--bg-content);
+    gap: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px 0px 40px;
+    padding: 10px 0px 20px;
+
+    &__item {
+        position: relative;
+        height: 80px;
+        width: 80px;
+    }
+
+    &__img {
+        background-color: #fff;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__item_remove {
+        cursor: pointer;
+        color: red;
+        position: absolute;
+        top: 0;
+        right: 5px;
+    }
+
+    &__item_format {
+        color: #000;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    &__descr {
+        line-clamp: 3;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+    }
+}
