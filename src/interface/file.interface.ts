@@ -15,7 +15,7 @@ export type FormSendApplication = {
 
 export type Application = {
     request_guid: string;
-    request_processed: boolean;
+    request_processed: StatusApplication;
     request_documents: FileData[];
 } & FormSendApplication;
 

@@ -16,12 +16,12 @@ export const Header = (): React.JSX.Element => {
                         </NavLink>
                     </li>
                     <li className={styles.nav__item}>
-                        <NavLink className={(isActive) => (isActive ? styles.isActive : '')} to={'/magazine'}>
+                        <NavLink className={({ isActive }) => (isActive ? styles.active_link : '')} to={'/magazine'}>
                             Журнал заявок
                         </NavLink>
                     </li>
                     <li className={styles.nav__item}>
-                        <NavLink className={(isActive) => (isActive ? styles.isActive : '')} to={'/archive'}>
+                        <NavLink className={({ isActive }) => (isActive ? styles.active_link : '')} to={'/archive'}>
                             Архив документов
                         </NavLink>
                     </li>

@@ -51,7 +51,6 @@ export function getMagazine(req: Request, res: Response) {
     try {
         const guid = req.headers['authorization']?.split(' ')[1];
         const magazine = MockDataBase.users.find((user) => user.guid === guid)?.magazine;
-        console.log(magazine);
         return res.status(200).send({ magazine });
     } catch (error) {
         return res.status(500).send(false);
