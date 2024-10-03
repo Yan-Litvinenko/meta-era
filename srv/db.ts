@@ -1,7 +1,7 @@
-import type { User } from '../src/interface/auth.interface';
+import type { DataBase } from '../src/interface/interface';
 
-const MockDataBase = {
-    users: [] as User[],
+const MockDataBase: DataBase = {
+    users: [],
 };
 
 export { MockDataBase };

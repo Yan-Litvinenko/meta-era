@@ -1,10 +1,11 @@
-import { useForm } from 'react-hook-form';
-import type { UserAuth } from '../interface/auth.interface';
-import type { SubmitHandler, UseFormHandleSubmit, UseFormRegister, FieldErrors } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { generateGUID } from '../helpers/generateGUID';
 import { setUser } from '../redux/slice/userSlice';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import type { AppDispatch } from '../redux/store';
+import type { SubmitHandler, UseFormHandleSubmit, UseFormRegister, FieldErrors } from 'react-hook-form';
+import type { UserAuth } from '../interface/auth.interface';
 
 type UseAuthorization = [
     UseFormHandleSubmit<UserAuth, undefined>,
@@ -25,19 +26,20 @@ export const useAuthorization = (): UseAuthorization => {
 
     const onSubmit: SubmitHandler<UserAuth> = async (data: UserAuth): Promise<void> => {
         event?.preventDefault();
+        const guid: string = generateGUID();
         try {
             const response: Response = await fetch('/api/authorization', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({ ...data, guid, magazine: [] }),
             });
 
-            const result: boolean = await response.json();
+            const result = await response.json();
 
-            if (result) {
-                dispatch(setUser({ name: data.name, auth_status: true }));
+            if (result?.status) {
+                dispatch(setUser({ name: data.name, guid: result?.guid || guid, magazine: [] }));
                 navigate('send-application');
             } else {
                 console.log('Не успешная авторизация');

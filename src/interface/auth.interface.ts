@@ -1,11 +1,13 @@
-export type User = {
-    name: string;
-};
+import { Application } from './file.interface';
 
 export type UserAuth = {
+    name: string;
+    guid: string;
     password: string;
-} & User;
+};
 
 export type UserSlice = {
-    auth_status: boolean;
-} & User;
+    name: string;
+    guid: string;
+    magazine: Application[];
+};

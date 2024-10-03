@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserSlice } from '../../interface/auth.interface';
+import type { Application } from '../../interface/file.interface';
 
 const initialState: UserSlice = {
     name: '',
-    auth_status: false,
+    guid: '',
+    magazine: [],
 };
 
 const userSlice = createSlice({
@@ -15,8 +17,12 @@ const userSlice = createSlice({
         setUser(state, action: PayloadAction<UserSlice>) {
             state.user = {
                 name: action.payload.name,
-                auth_status: action.payload.auth_status,
+                guid: action.payload.guid,
+                magazine: action.payload.magazine,
             };
+        },
+        setMagazine(state, action: PayloadAction<Application[]>) {
+            state.user.magazine = action.payload;
         },
     },
 });

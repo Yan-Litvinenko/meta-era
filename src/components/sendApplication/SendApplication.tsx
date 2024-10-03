@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './SendApplication.module.scss';
 import { useForm } from 'react-hook-form';
-// import { generateGUID } from '../../helpers/generateUUID';
 import { FileList } from '../fileList/FileList';
 import { useFileData } from '../../hooks/useFileData';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../redux/selectors';
 import type { SubmitHandler } from 'react-hook-form';
 import type { FormSendApplication } from '../../interface/file.interface';
 
@@ -15,19 +16,25 @@ export const SendApplication = (): React.JSX.Element => {
         handleSubmit,
     } = useForm<FormSendApplication>();
     const [fileData, errorFile, setFileData, handleChangeFile] = useFileData();
+    const { guid } = useSelector(userSelector);
 
     const onSubmit: SubmitHandler<FormSendApplication> = async (data: FormSendApplication) => {
         if (!errorFile) {
             try {
-                // const response = await fetch('/api/send-application');
-                console.log(`data: ${JSON.stringify(data)}`);
-                console.log(`fileData: ${JSON.stringify(fileData)}`);
-                // const application: NewApplication = {
-                //     ...data,
-                //     request_documents: [...fileData],
-                //     request_guid: generateGUID(),
-                //     request_processed: false,
-                // };
+                const response = await fetch('/api/new-application', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ...data, files: fileData, guid_user: guid }),
+                });
+
+                const result = await response.json();
+
+                if (result) {
+                    console.log('Успешно отправлена заявка');
+                }
+
                 reset();
             } catch (error) {}
         }

@@ -1,23 +1,56 @@
-import type { Response, Request } from 'express';
 import { MockDataBase } from './db';
+import { UserSlice } from '../src/interface/auth.interface';
+import type { Response, Request } from 'express';
+import type { Application } from '../src/interface/file.interface';
 
 export function authorization(req: Request, res: Response) {
     if (req.method !== 'POST') {
         return res.status(405).send('Method Not Allowed');
     }
 
-    const newUser = req.body;
+    const newUser: UserSlice & { password: string } = req.body;
 
     if (!newUser) {
         return res.status(400).send('No user data provided');
     }
 
+    const hasUser: number = MockDataBase.users.findIndex((user) => {
+        return user.name === newUser.name && user.password === newUser.password;
+    });
+
     try {
+        if (hasUser >= 0) {
+            return res.status(201).send({ guid: MockDataBase.users[hasUser].guid, status: true });
+        }
+
         MockDataBase.users.push(newUser);
-        console.log(MockDataBase);
-        return res.status(201).send(true);
+        return res.status(201).send({ status: true });
     } catch (error) {
         console.error('Error adding user to the database:', error);
+        return res.status(500).send(false);
+    }
+}
+
+export function newApplication(req: Request, res: Response) {
+    if (req.method !== 'POST') {
+        return res.status(405).send('Method Not Allowed');
+    }
+
+    const newApplication: Application & { guid_user: string } = req.body;
+    const { guid_user, ...applicationWithoutGuidUser } = newApplication;
+    const user = MockDataBase.users.find((user) => user.guid === guid_user);
+
+    if (user) {
+        user.magazine.push(applicationWithoutGuidUser);
+    }
+
+    return res.status(201).send({ status: true });
+}
+
+export function getDataBase(_: Request, res: Response) {
+    try {
+        return res.status(201).send({ dataBase: MockDataBase });
+    } catch (error) {
         return res.status(500).send(false);
     }
 }

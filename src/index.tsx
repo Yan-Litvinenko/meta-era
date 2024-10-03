@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import { App } from './components/app/App';
+import { loaderDataBase } from './helpers/dataBaseLoader';
 import { Authorization } from './components/authorization/Authorization';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import { Magazine } from './components/magazine/Magazine';
 import { SendApplication } from './components/sendApplication/SendApplication';
 import './css/index.scss';
 
@@ -14,6 +16,7 @@ const router = createBrowserRouter(
         <Route element={<App />} path="/">
             <Route index element={<Authorization />} />
             <Route element={<SendApplication />} path="send-application" />
+            <Route element={<Magazine />} path="magazine" loader={loaderDataBase} />
         </Route>,
     ),
 );
