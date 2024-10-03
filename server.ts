@@ -1,7 +1,7 @@
 import http from 'http';
 import express, { Request, Response } from 'express';
 import path from 'path';
-import { authorization, getDataBase, newApplication } from './srv/routes';
+import { authorization, getMagazine, newApplication } from './srv/routes';
 
 const app = express();
 const PORT: number = 3000;
@@ -13,7 +13,7 @@ const PORT: number = 3000;
 
         app.post('/api/authorization', authorization);
         app.post('/api/new-application', newApplication);
-        app.get('/api/getDataBase', getDataBase);
+        app.get('/api/getMagazine', getMagazine);
 
         app.get('*', (_: Request, res: Response) => {
             res.sendFile(path.join(__dirname, 'dist', 'index.html'));

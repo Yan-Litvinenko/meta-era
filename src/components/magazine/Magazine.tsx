@@ -4,15 +4,16 @@ import { Suspense } from 'react';
 import type { DataBase } from '../../interface/interface';
 
 export const Magazine = (): React.JSX.Element => {
-    const { dataBase } = useLoaderData() as { dataBase: DataBase };
+    const { magazine } = useLoaderData() as { magazine: DataBase };
 
     return (
         <section>
             <h1>Журнал заявок</h1>
             <Suspense fallback={<div>Загрузка журнала заявок...</div>}>
-                <Await resolve={dataBase}>
-                    {(resolveDataBase: DataBase | boolean) => {
-                        if (resolveDataBase) {
+                <Await resolve={magazine}>
+                    {(resolveMagazine: DataBase | boolean) => {
+                        if (resolveMagazine) {
+                            console.log(resolveMagazine);
                             return <div>Журнал заявок получен</div>;
                         }
                     }}

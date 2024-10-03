@@ -47,9 +47,12 @@ export function newApplication(req: Request, res: Response) {
     return res.status(201).send({ status: true });
 }
 
-export function getDataBase(_: Request, res: Response) {
+export function getMagazine(req: Request, res: Response) {
     try {
-        return res.status(201).send({ dataBase: MockDataBase });
+        const guid = req.headers['authorization']?.split(' ')[1];
+        const magazine = MockDataBase.users.find((user) => user.guid === guid)?.magazine;
+        console.log(magazine);
+        return res.status(200).send({ magazine });
     } catch (error) {
         return res.status(500).send(false);
     }
