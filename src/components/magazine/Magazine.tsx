@@ -4,7 +4,8 @@ import { useLoaderData, Await } from 'react-router';
 import { nanoid } from '@reduxjs/toolkit';
 import { getProcessStatus } from '../../helpers/getProcessStatus';
 import { Suspense } from 'react';
-import type { Application, StatusApplication } from '../../interface/file.interface';
+import type { StatusApplication } from '../../interface/file.interface';
+import type { Application } from '../../interface/application.interface';
 
 export const Magazine = (): React.JSX.Element => {
     const { magazine } = useLoaderData() as { magazine: Application[] };

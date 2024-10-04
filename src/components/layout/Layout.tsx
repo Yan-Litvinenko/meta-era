@@ -1,14 +1,13 @@
 import React from 'react';
 import { Header } from '../header/Header';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet } from 'react-router';
 import { AuthProvider } from '../../hoc/AuthProvider';
+import { SendApplication } from '../sendApplication/SendApplication';
+import { modalSelector } from '../../redux/selectors';
+import { useSelector } from 'react-redux';
 
 export const Layout = (): React.JSX.Element => {
-    const location = useLocation();
-
-    if (location.pathname === '/') {
-        return <Outlet />;
-    }
+    const { application } = useSelector(modalSelector);
 
     return (
         <>
@@ -16,6 +15,7 @@ export const Layout = (): React.JSX.Element => {
                 <Header />
                 <Outlet />
             </AuthProvider>
+            {application ? <SendApplication /> : null}
         </>
     );
 };

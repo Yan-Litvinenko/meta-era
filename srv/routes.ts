@@ -1,7 +1,7 @@
 import { MockDataBase } from './db';
-import { UserSlice } from '../src/interface/auth.interface';
+import type { UserSlice } from '../src/interface/slice.interface';
 import type { Response, Request } from 'express';
-import type { Application } from '../src/interface/file.interface';
+import type { Application } from '../src/interface/application.interface';
 
 export function authorization(req: Request, res: Response) {
     if (req.method !== 'POST') {

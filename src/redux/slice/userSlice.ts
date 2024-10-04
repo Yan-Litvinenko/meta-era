@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserSlice } from '../../interface/auth.interface';
-import type { Application } from '../../interface/file.interface';
+import type { UserSlice } from '../../interface/slice.interface';
+import type { Application } from '../../interface/application.interface';
 
 const initialState: UserSlice = {
     name: '',

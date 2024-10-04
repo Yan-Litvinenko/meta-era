@@ -1,10 +1,12 @@
 import userSlice from './slice/userSlice';
+import modalSlice from './slice/modaSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 
 const store = configureStore({
     reducer: {
         userState: userSlice,
+        modalState: modalSlice,
     },
 });
 
