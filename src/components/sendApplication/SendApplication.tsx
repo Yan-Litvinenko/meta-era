@@ -1,77 +1,12 @@
 import React from 'react';
 import styles from './SendApplication.module.scss';
-import { close } from '../../redux/slice/modaSlice';
+import { useSendApplication } from '../../hooks/useSendApplication';
 import { FileList } from '../fileList/FileList';
 import { FormField } from '../formField/FormField';
-import { generateGUID } from '../../helpers/generateGUID';
-import { useFileData } from '../../hooks/useFileData';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { userSelector } from '../../redux/selectors';
-import { useSelector, useDispatch } from 'react-redux';
-import type { SubmitHandler } from 'react-hook-form';
-import type { FormSendApplication, Application } from '../../interface/application.interface';
 
 export const SendApplication = (): React.JSX.Element => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const {
-        register,
-        reset,
-        setError,
-        clearErrors,
-        formState: { errors },
-        handleSubmit,
-    } = useForm<FormSendApplication & { request_file: string }>();
-    const [fileData, errorFile, setFileData, handleChangeFile] = useFileData();
-    const { guid } = useSelector(userSelector);
-
-    const closeModal = () => dispatch(close('application'));
-
-    const onSubmit: SubmitHandler<FormSendApplication> = async (data: FormSendApplication) => {
-        if (!errorFile) {
-            try {
-                const response = await fetch('/api/new-application', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...data,
-                        request_documents: fileData,
-                        guid_user: guid,
-                        request_guid: generateGUID(),
-                        request_processed: 'IN_PROCESS',
-                    } as Application),
-                });
-
-                const result = await response.json();
-
-                if (result) {
-                    navigate(location.pathname, { replace: true });
-                    reset();
-                    closeModal();
-                    console.log('Успешно отправлена заявка');
-                } else {
-                    console.log('Не успешно отправлена заявка');
-                }
-            } catch (error) {}
-        }
-    };
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-
-        if (files && files.length > 9) {
-            setError('request_file', { message: 'Вы можете загрузить не более 10 файлов.' });
-        } else {
-            clearErrors('request_file');
-        }
-
-        handleChangeFile(event);
-    };
+    const { errors, closeModal, register, handleSubmit, fileData, setFileData, onSubmit, handleFileChange } =
+        useSendApplication();
 
     return (
         <article className={styles.content} onClick={closeModal}>

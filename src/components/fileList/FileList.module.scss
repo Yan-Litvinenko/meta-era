@@ -21,10 +21,13 @@
 
     &__item_remove {
         cursor: pointer;
-        color: red;
+        color: var(--bg-form-btn);
+        font-weight: 900;
+        font-size: 25px;
         position: absolute;
-        top: 0;
-        right: 5px;
+        top: -3px;
+        right: -3px;
+        display: block;
     }
 
     &__item_format {

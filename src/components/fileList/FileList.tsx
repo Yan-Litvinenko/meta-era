@@ -5,6 +5,7 @@ import styles from './FileList.module.scss';
 import { isFileImage } from '../../helpers/isFileImage';
 import { nanoid } from '@reduxjs/toolkit';
 import { getFileFormat } from '../../helpers/getFileFormat';
+import { base64ToFile } from '../../helpers/base64ToFile';
 import type { FileData } from '../../interface/file.interface';
 
 type FileListProps = {
@@ -15,7 +16,8 @@ type FileListProps = {
 export const FileList = (props: FileListProps): React.JSX.Element => {
     const { files, setFiles } = props;
 
-    const fileRemove = (index: number): void => {
+    const fileRemove = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>, index: number): void => {
+        event.stopPropagation();
         setFiles((prev) => {
             return prev.filter((_, i) => i !== index);
         });
@@ -24,6 +26,10 @@ export const FileList = (props: FileListProps): React.JSX.Element => {
     if (!files.length) {
         return <></>;
     }
+
+    const downloadLink = (file: FileData): string => {
+        return URL.createObjectURL(base64ToFile(file.file_data, file.file_name));
+    };
 
     return (
         <>
@@ -34,12 +40,18 @@ export const FileList = (props: FileListProps): React.JSX.Element => {
 
                     return (
                         <figure className={styles.list__item} key={nanoid()}>
-                            <span className={styles.list__item_remove} onClick={() => fileRemove(index)}>
+                            <span className={styles.list__item_remove} onClick={(event) => fileRemove(event, index)}>
                                 &#10006;
                             </span>
                             <img className={styles.list__img} src={isImage ? stubImage : stubFile} alt="Заглушка" />
                             {!isImage ? <span className={styles.list__item_format}>{fileFormat}</span> : null}
-                            <figcaption className={styles.list__descr}>{file.file_name}</figcaption>
+
+                            <figcaption className={styles.list__descr}>
+                                {' '}
+                                <a href={downloadLink(file)} download={file.file_name}>
+                                    {file.file_name}
+                                </a>
+                            </figcaption>
                         </figure>
                     );
                 })}

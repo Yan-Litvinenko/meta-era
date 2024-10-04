@@ -27,6 +27,7 @@
 .active_link {
     cursor: auto;
     text-shadow: 1px 1px 1px var(--main-color);
+    pointer-events: none;
 }
 
 .account {

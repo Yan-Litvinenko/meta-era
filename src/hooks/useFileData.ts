@@ -11,8 +11,8 @@ type UseFileData = [
 
 const MAX_FILE_SIZE: number = 3 * 1024 * 1024;
 
-export const useFileData = (): UseFileData => {
-    const [fileData, setFileData] = React.useState<FileData[]>([]);
+export const useFileData = (files?: FileData[]): UseFileData => {
+    const [fileData, setFileData] = React.useState<FileData[]>(files || []);
     const [error, setError] = React.useState<string | null>(null);
 
     const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {

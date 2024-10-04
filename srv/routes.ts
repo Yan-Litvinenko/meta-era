@@ -49,6 +49,26 @@ export function newApplication(req: Request, res: Response) {
     return res.status(201).send({ status: true });
 }
 
+export function editApplication(req: Request, res: Response) {
+    try {
+        const guidUser: string = req.body[1].guid_user;
+        const updateApplication = req.body[0] as Application;
+
+        const user: UserSlice & { password: string } = MockDataBase.users.find((user) => user.guid === guidUser)!;
+        const application = user.magazine.find(
+            (item) => item.request_guid === updateApplication.request_guid,
+        ) as Application;
+
+        Object.entries(updateApplication).forEach(([key, value]) => {
+            (application[key as keyof Application] as unknown) = value;
+        });
+
+        return res.status(201).send(true);
+    } catch (error) {
+        return res.status(500).send(false);
+    }
+}
+
 export function getMagazine(req: Request, res: Response) {
     try {
         const guid = req.headers['authorization']?.split(' ')[1];

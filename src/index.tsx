@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './components/app/App';
-import { ApplicationPage } from './components/application/Application';
+import { EditApplication } from './components/editAppplication/EditApplication';
 import { Authorization } from './components/authorization/Authorization';
 import { Layout } from './components/layout/Layout';
 import { loaderMagazine } from './components/magazine/loaderMagazine';
@@ -18,7 +18,7 @@ const router = createBrowserRouter(
             <Route element={<Authorization />} index />
             <Route element={<Layout />}>
                 <Route element={<Magazine />} path="magazine" loader={loaderMagazine} index />
-                <Route element={<ApplicationPage />} path="magazine/:guid" />
+                <Route element={<EditApplication />} path="magazine/:guid" />
             </Route>
         </Route>,
     ),
