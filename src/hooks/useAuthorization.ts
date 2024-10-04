@@ -25,7 +25,6 @@ export const useAuthorization = (): UseAuthorization => {
     } = useForm<UserAuth>();
 
     const onSubmit: SubmitHandler<UserAuth> = async (data: UserAuth): Promise<void> => {
-        event?.preventDefault();
         const guid: string = generateGUID();
         try {
             const response: Response = await fetch('/api/authorization', {

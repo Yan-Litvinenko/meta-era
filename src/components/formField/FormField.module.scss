@@ -1,0 +1,29 @@
+.label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    row-gap: 7px;
+    width: 100%;
+}
+
+.tilte {
+    font-size: 20px;
+}
+
+.input {
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+    padding: 5px 10px;
+}
+
+.error {
+    bottom: -20%;
+    color: red;
+    display: flex;
+    font-size: 10px;
+    left: 0;
+    max-width: 440px;
+    position: absolute;
+}
