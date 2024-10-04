@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Magazine.module.scss';
-import { useLoaderData, Await } from 'react-router';
+import { useLoaderData, Await, useNavigate } from 'react-router';
 import { nanoid } from '@reduxjs/toolkit';
 import { getProcessStatus } from '../../helpers/getProcessStatus';
 import { Suspense } from 'react';
@@ -9,10 +9,15 @@ import type { Application } from '../../interface/application.interface';
 
 export const Magazine = (): React.JSX.Element => {
     const { magazine } = useLoaderData() as { magazine: Application[] };
+    const navigate = useNavigate();
+
+    const toApplication = (url: string, application: Application) => {
+        navigate(url, { state: { application } });
+    };
 
     return (
-        <section>
-            <h1 className={styles.magazine__title}>Журнал заявок</h1>
+        <section className="page">
+            <h1 className="title">Журнал заявок</h1>
             <Suspense fallback={<div>Загрузка журнала заявок...</div>}>
                 <Await resolve={magazine}>
                     {(resolveMagazine: { magazine: Application[] } | false) => {
@@ -30,6 +35,7 @@ export const Magazine = (): React.JSX.Element => {
                                         <tr className={styles.table__row}>
                                             {(Object.keys(thead) as Array<keyof typeof thead>)
                                                 .filter((key) => key in thead)
+                                                .sort()
                                                 .map((title) => (
                                                     <th className={styles.table__cell} key={title}>
                                                         {thead[title]}
@@ -39,25 +45,24 @@ export const Magazine = (): React.JSX.Element => {
                                     </thead>
                                     <tbody>
                                         {magazineArray.map((itemMagazine) => (
-                                            <tr className={styles.table__row} key={nanoid()}>
-                                                {Object.entries(itemMagazine).map(([key, value]) => {
-                                                    if (key in thead) {
-                                                        if (key === 'request_processed') {
+                                            <tr
+                                                className={styles.table__row}
+                                                key={nanoid()}
+                                                onClick={() => toApplication(itemMagazine.request_guid, itemMagazine)}
+                                            >
+                                                {Object.entries(itemMagazine)
+                                                    .sort()
+                                                    .map(([key, value]) => {
+                                                        if (key in thead) {
                                                             return (
                                                                 <td className={styles.table__cell} key={nanoid()}>
-                                                                    {getProcessStatus(value as StatusApplication)}
+                                                                    {key === 'request_processed'
+                                                                        ? getProcessStatus(value as StatusApplication)
+                                                                        : value.toString()}
                                                                 </td>
                                                             );
                                                         }
-
-                                                        return (
-                                                            <td className={styles.table__cell} key={nanoid()}>
-                                                                {value.toString()}
-                                                            </td>
-                                                        );
-                                                    }
-                                                    return null;
-                                                })}
+                                                    })}
                                             </tr>
                                         ))}
                                     </tbody>

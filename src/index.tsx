@@ -1,22 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import { App } from './components/app/App';
-import { loaderMagazine } from './components/magazine/loaderMagazine';
+import { ApplicationPage } from './components/application/Application';
 import { Authorization } from './components/authorization/Authorization';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import { Magazine } from './components/magazine/Magazine';
-import './css/index.scss';
 import { Layout } from './components/layout/Layout';
+import { loaderMagazine } from './components/magazine/loaderMagazine';
+import { Magazine } from './components/magazine/Magazine';
+import { Provider } from 'react-redux';
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { store } from './redux/store';
+import './css/index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<App />} path="/">
-            <Route index element={<Authorization />} />
+            <Route element={<Authorization />} index />
             <Route element={<Layout />}>
-                <Route index element={<Magazine />} path="magazine" loader={loaderMagazine} />
+                <Route element={<Magazine />} path="magazine" loader={loaderMagazine} index />
+                <Route element={<ApplicationPage />} path="magazine/:guid" />
             </Route>
         </Route>,
     ),

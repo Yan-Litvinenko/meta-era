@@ -36,6 +36,8 @@ export function newApplication(req: Request, res: Response) {
         return res.status(405).send('Method Not Allowed');
     }
 
+    console.log(JSON.stringify(req.body));
+
     const newApplication: Application & { guid_user: string } = req.body;
     const { guid_user, ...applicationWithoutGuidUser } = newApplication;
     const user = MockDataBase.users.find((user) => user.guid === guid_user);

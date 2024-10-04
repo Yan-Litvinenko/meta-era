@@ -2,15 +2,20 @@ import React from 'react';
 import styles from './SendApplication.module.scss';
 import { useForm } from 'react-hook-form';
 import { FileList } from '../fileList/FileList';
+import { generateGUID } from '../../helpers/generateGUID';
 import { useFileData } from '../../hooks/useFileData';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { userSelector } from '../../redux/selectors';
 import { close } from '../../redux/slice/modaSlice';
 import type { SubmitHandler } from 'react-hook-form';
-import type { FormSendApplication } from '../../interface/application.interface';
+import type { FormSendApplication, Application } from '../../interface/application.interface';
 
 export const SendApplication = (): React.JSX.Element => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const {
         register,
         reset,
@@ -30,16 +35,25 @@ export const SendApplication = (): React.JSX.Element => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ ...data, files: fileData, guid_user: guid }),
+                    body: JSON.stringify({
+                        ...data,
+                        request_documents: fileData,
+                        guid_user: guid,
+                        request_guid: generateGUID(),
+                        request_processed: 'IN_PROCESS',
+                    } as Application),
                 });
 
                 const result = await response.json();
 
                 if (result) {
+                    navigate(location.pathname, { replace: true });
+                    reset();
+                    closeModal();
                     console.log('Успешно отправлена заявка');
+                } else {
+                    console.log('Не успешно отправлена заявка');
                 }
-
-                reset();
             } catch (error) {}
         }
     };
@@ -50,7 +64,7 @@ export const SendApplication = (): React.JSX.Element => {
                 <span className={styles.content__close} onClick={closeModal}>
                     &#10006;
                 </span>
-                <h2 className={styles.title}>Форма отправки документа</h2>
+                <h2 className={styles.title}>Форма отправки заявки</h2>
                 <form className={styles.form} method="POST" onSubmit={handleSubmit(onSubmit)}>
                     <label className={styles.form__label} htmlFor="name">
                         <span>Имя организации</span>
