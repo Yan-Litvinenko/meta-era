@@ -34,11 +34,13 @@ export const useSendApplication = () => {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        ...data,
+                        request_date: data.request_date.split('-').reverse().join('.'),
                         request_documents: fileData,
                         guid_user: guid,
                         request_guid: generateGUID(),
                         request_processed: 'IN_PROCESS',
+                        request_comment: data.request_comment,
+                        request_name_organization: data.request_name_organization,
                     } as Application),
                 });
 

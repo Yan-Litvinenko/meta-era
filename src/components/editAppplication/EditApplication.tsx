@@ -97,7 +97,12 @@ export const EditApplication = (): React.JSX.Element => {
                             message: 'Название не может быть длиннее 20 символов',
                         },
                         onChange(event) {
-                            setName(event.target.value);
+                            if (
+                                application.request_processed === 'IN_PROCESS' ||
+                                application.request_processed === 'NEW'
+                            ) {
+                                setName(event.target.value);
+                            }
                         },
                     })}
                     error={errors.request_name_organization}
@@ -127,7 +132,12 @@ export const EditApplication = (): React.JSX.Element => {
                             message: 'Комментарий не может быть длиннее 1000 символов',
                         },
                         onChange(event) {
-                            setComment(event.target.value);
+                            if (
+                                application.request_processed === 'IN_PROCESS' ||
+                                application.request_processed === 'NEW'
+                            ) {
+                                setComment(event.target.value);
+                            }
                         },
                     })}
                     error={errors.request_comment}
@@ -139,12 +149,23 @@ export const EditApplication = (): React.JSX.Element => {
                     multiple={true}
                     accept=".jpg,.jpeg,.png,.bmp,.tiff,.pdf,.doc,.docx,.rtf,.xls,.xlsx"
                     max={10}
-                    onChange={
-                        handleFileChange as (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-                    }
+                    onChange={() => {
+                        if (application.request_processed === 'IN_PROCESS' || application.request_processed === 'NEW') {
+                            handleFileChange as (
+                                event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+                            ) => void;
+                        }
+                    }}
                     error={errors.request_file}
                 />
-                <FileList files={fileData} setFiles={setFileData} />
+                <FileList
+                    files={fileData}
+                    setFiles={() => {
+                        if (application.request_processed === 'IN_PROCESS' || application.request_processed === 'NEW') {
+                            return setFileData;
+                        }
+                    }}
+                />
                 <input className={styles.application__btn} type="submit" value={'Сохранить изменения'} />
                 <input
                     className={styles.application__btn}

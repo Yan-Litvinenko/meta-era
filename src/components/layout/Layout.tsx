@@ -5,6 +5,7 @@ import { AuthProvider } from '../../hoc/AuthProvider';
 import { SendApplication } from '../sendApplication/SendApplication';
 import { modalSelector } from '../../redux/selectors';
 import { useSelector } from 'react-redux';
+import { FilterPanel } from '../filterPanel/FilterPanel';
 
 export const Layout = (): React.JSX.Element => {
     const { application } = useSelector(modalSelector);
@@ -13,6 +14,7 @@ export const Layout = (): React.JSX.Element => {
         <>
             <AuthProvider>
                 <Header />
+                <FilterPanel />
                 <Outlet />
             </AuthProvider>
             {application ? <SendApplication /> : null}

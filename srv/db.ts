@@ -9,14 +9,14 @@ const MockDataBase: DataBase = {
             magazine: [
                 {
                     request_comment: 'Требуется пересмотреть условия договора.',
-                    request_date: '2023-01-15',
+                    request_date: '15.01.2023',
                     request_documents: [
                         {
-                            file_data: 'base64encodedfiledata1',
+                            file_data: 'text/plain;base64,MQ==',
                             file_name: 'Договор аренды.pdf',
                         },
                         {
-                            file_data: 'base64encodedfiledata2',
+                            file_data: 'text/plain;base64,MQ==',
                             file_name: 'Техническое задание.docx',
                         },
                     ],
@@ -26,23 +26,23 @@ const MockDataBase: DataBase = {
                 },
                 {
                     request_comment: 'Запрос на закупку оборудования.',
-                    request_date: '2023-02-10',
+                    request_date: '10.02.2023',
                     request_documents: [
                         {
-                            file_data: 'base64encodedfiledata3',
+                            file_data: 'text/plain;base64,MQ==',
                             file_name: 'Запрос на оборудование.pdf',
                         },
                     ],
                     request_name_organization: 'ООО "ЭнергоПром"',
-                    request_processed: 'IN_PROCESS',
+                    request_processed: 'FINISHED',
                     request_guid: 'b6e5e712-417a-4f56-88e1-b3d9d06b80ea',
                 },
                 {
                     request_comment: 'Пересмотр сметы на проект.',
-                    request_date: '2023-03-05',
+                    request_date: '05.03.2023',
                     request_documents: [
                         {
-                            file_data: 'base64encodedfiledata4',
+                            file_data: 'text/plain;base64,MQ==',
                             file_name: 'Смета проекта.xlsx',
                         },
                     ],

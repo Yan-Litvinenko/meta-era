@@ -23,6 +23,7 @@ module.exports = {
             },
         ],
         'no-use-before-define': 'off',
+        '@typescript-eslint/no-unused-expressions': 'warn',
         '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
         'no-debugger': 'off',
         'no-console': 'off',

@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import { Link, NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { open } from '../../redux/slice/modaSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSelector } from '../../redux/selectors';
 
 export const Header = (): React.JSX.Element => {
     const dispatch = useDispatch();
+    const { name } = useSelector(userSelector);
 
     return (
         <header className={styles.header}>
@@ -19,7 +21,7 @@ export const Header = (): React.JSX.Element => {
                     </li>
                     <li className={styles.nav__item}>
                         <NavLink className={({ isActive }) => (isActive ? styles.active_link : '')} to={'/archive'}>
-                            Архив документов
+                            Архив заявок
                         </NavLink>
                     </li>
                     <li onClick={() => dispatch(open('application'))}>
@@ -30,7 +32,7 @@ export const Header = (): React.JSX.Element => {
                 </ul>
             </nav>
             <article className={styles.account}>
-                <span className={styles.account__name}>Ян</span>
+                <span className={styles.account__name}>{name[0].toUpperCase()}</span>
                 <ul className={styles.account__list}>
                     <li className={styles.account__item}>
                         <Link to={'/'}>Выход</Link>
