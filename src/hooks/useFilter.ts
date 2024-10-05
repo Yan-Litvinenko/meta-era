@@ -7,6 +7,7 @@ export const useFilter = () => {
     const { periodDate, statusApplication } = useSelector(filterSelector);
 
     const filterMagazine = (application: Application[]) => {
+        console.log(application);
         return application.filter((item) => {
             if (periodDate.start && periodDate.end) {
                 const requestDate: number = getDateMs(item.request_date);

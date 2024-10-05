@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './Magazine.module.scss';
-import { useLoaderData, Await, useNavigate } from 'react-router';
-import { nanoid } from '@reduxjs/toolkit';
 import { getProcessStatusInMagazine } from '../../helpers/getProcessStatus';
+import { nanoid } from '@reduxjs/toolkit';
 import { useFilter } from '../../hooks/useFilter';
-import { Suspense } from 'react';
+import { useLoaderData, Await, useNavigate } from 'react-router';
 import type { StatusApplication } from '../../interface/file.interface';
 import type { Application } from '../../interface/application.interface';
 
@@ -44,7 +43,7 @@ export const Magazine = (): React.JSX.Element => {
     return (
         <section className="page">
             <h1 className="title">Журнал заявок</h1>
-            <Suspense fallback={<div>Загрузка журнала заявок...</div>}>
+            <React.Suspense fallback={<div>Загрузка журнала заявок...</div>}>
                 <Await resolve={magazine}>
                     {(resolveMagazine: { magazine: Application[] } | false) => {
                         if (resolveMagazine) {
@@ -112,7 +111,7 @@ export const Magazine = (): React.JSX.Element => {
                         }
                     }}
                 </Await>
-            </Suspense>
+            </React.Suspense>
         </section>
     );
 };

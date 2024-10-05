@@ -4,7 +4,7 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 interface FormFieldProps {
     id: string;
-    type: 'text' | 'date' | 'textarea' | 'file' | 'password';
+    type: 'text' | 'date' | 'textarea' | 'file' | 'password' | 'checkbox';
     textLabel?: string;
     register?: UseFormRegisterReturn;
     error?: FieldError;
@@ -13,12 +13,13 @@ interface FormFieldProps {
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     multiple?: boolean;
     accept?: string;
+    checked?: boolean;
     max?: number;
 }
 
 export const FormField = (props: FormFieldProps): React.JSX.Element => {
     const { textLabel, id, type, register, multiple, accept, max } = props;
-    const { error, value, placeholder, onChange } = props;
+    const { error, value, placeholder, onChange, checked } = props;
 
     return (
         <label className={styles.label} htmlFor={id}>
@@ -45,6 +46,7 @@ export const FormField = (props: FormFieldProps): React.JSX.Element => {
                     multiple={multiple}
                     accept={accept}
                     max={max}
+                    checked={checked}
                     required={true}
                 />
             )}

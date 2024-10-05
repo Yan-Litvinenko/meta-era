@@ -36,8 +36,6 @@ export function newApplication(req: Request, res: Response) {
         return res.status(405).send('Method Not Allowed');
     }
 
-    console.log(JSON.stringify(req.body));
-
     const newApplication: Application & { guid_user: string } = req.body;
     const { guid_user, ...applicationWithoutGuidUser } = newApplication;
     const user = MockDataBase.users.find((user) => user.guid === guid_user);
@@ -65,6 +63,33 @@ export function editApplication(req: Request, res: Response) {
 
         return res.status(201).send(true);
     } catch (error) {
+        return res.status(500).send(false);
+    }
+}
+
+export function deleteApplication(req: Request, res: Response) {
+    const { guidUser, guidApplication } = req.params;
+
+    try {
+        const indexUser = MockDataBase.users.findIndex((user) => user.guid === guidUser);
+
+        if (indexUser < 0) {
+            return res.status(404).json({ message: 'Пользователь не найден' });
+        }
+
+        const indexApplication: number = MockDataBase.users[indexUser].magazine.findIndex(
+            (item) => item.request_guid === guidApplication,
+        );
+
+        if (indexApplication < 0) {
+            return res.status(404).json({ message: 'Заявка не найдена' });
+        }
+
+        MockDataBase.users[indexUser].magazine.splice(indexApplication, 1);
+        console.log(`Успешное удаление из БД элемента`);
+        return res.status(200).send(true);
+    } catch (error) {
+        console.error('Ошибка при удалении заявки:', error);
         return res.status(500).send(false);
     }
 }

@@ -5,3 +5,4 @@ export interface DataBase {
 }
 
 export type Modal = 'application';
+export type SortOrder = 'asc' | 'desc';
