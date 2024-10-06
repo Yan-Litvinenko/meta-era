@@ -1,0 +1,22 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+    max-width: max-content;
+
+    &__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+    }
+
+    &__label {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+    }
+}

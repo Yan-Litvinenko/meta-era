@@ -38,23 +38,7 @@ ol {
     list-style: none;
 }
 
-.wrapper {
-    margin: 0 auto;
-    max-width: 1400px;
-    padding: 0px 20px;
-    width: 100%;
-    min-height: 100vh;
-}
-
-.page {
-    padding-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.title {
+h1 {
     font-size: 48px;
     margin-bottom: 40px;
     text-align: center;

@@ -1,0 +1,13 @@
+.panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: space-between;
+
+    &__title {
+        font-size: 28px;
+        margin-bottom: 10px;
+        text-align: center;
+        width: 100%;
+    }
+}

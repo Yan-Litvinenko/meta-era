@@ -41,11 +41,34 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName: '[name]__[local]___[hash:base64:5]',
+                            },
+                        },
+                    },
+                    'postcss-loader',
+                ],
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName: '[name]__[local]--[hash:base64:5]',
+                            },
+                        },
+                    },
+                    'postcss-loader',
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.(mp3|wav)$/i,

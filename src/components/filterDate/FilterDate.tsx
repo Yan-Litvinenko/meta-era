@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './FilterDate.module.scss';
 import { useDispatch } from 'react-redux';
 import { setPeriodDateFilter } from '../../redux/slice/filterSlice';
 import { FormField } from '../formField/FormField';
@@ -66,18 +67,18 @@ export const FilterDate = (): React.JSX.Element => {
 
     return (
         <>
-            <section>
-                <h3>Период</h3>
-                <div>
-                    С
+            <section className={styles.filter}>
+                <h3 className={styles.filter__title}>Фильтр по периоду</h3>
+                <div className={styles.filter__content}>
                     <FormField
+                        textLabel="c"
                         id="start"
                         type="date"
                         value={startDate}
                         onChange={(event) => handleDateChange('start', event.target.value)}
                     />
-                    По
                     <FormField
+                        textLabel="по"
                         id="end"
                         type="date"
                         value={endDate}
@@ -86,12 +87,13 @@ export const FilterDate = (): React.JSX.Element => {
                 </div>
             </section>
 
-            <section>
-                <h3>Быстрый выбор</h3>
-                <div>
+            <section className={styles.fast_filter}>
+                <h3 className={styles.fast_filter__title}>Быстрый выбор</h3>
+                <div className={styles.fast_filter__content}>
                     {['today', 'week', 'month'].map((period) => (
                         <FormField
                             key={period}
+                            labelClass={styles.fast_filter__label}
                             id={period}
                             textLabel={period === 'today' ? 'Сегодня' : period === 'week' ? 'Неделя' : 'Месяц'}
                             type="checkbox"

@@ -3,48 +3,24 @@ import styles from './EditApplication.module.scss';
 import { useNavigate } from 'react-router';
 import { FormField } from '../formField/FormField';
 import { FileList } from '../fileList/FileList';
-import { useSelector } from 'react-redux';
-import { userSelector } from '../../redux/selectors';
 import { useEditApplication } from '../../hooks/useEditApplication';
+import { useDeleteApplication } from '../../hooks/useDeleteApplication';
+import { getProcessStatusInMagazine } from '../../helpers/getProcessStatus';
 
 export const EditApplication = (): React.JSX.Element => {
     const navigate = useNavigate();
-    const { guid } = useSelector(userSelector);
     const editApplication = useEditApplication();
+    const deleteApplication = useDeleteApplication(editApplication.application.request_guid);
 
     return (
-        <section className="page">
+        <section className={styles.application}>
             <h1 className="title">Просмотр/редактирование заявки</h1>
 
             <form
                 className={styles.application__form}
                 onSubmit={editApplication.handleSubmit(editApplication.onSubmit)}
             >
-                {editApplication.application.request_processed === 'IN_PROCESS' ? (
-                    <span
-                        onClick={async () => {
-                            alert('click');
-                            const response = await fetch(
-                                `/api/delete/${guid}/${editApplication.application.request_guid}`,
-                                {
-                                    method: 'DELETE',
-                                },
-                            );
-
-                            const result = await response.json();
-
-                            alert(result);
-
-                            if (result) {
-                                alert('Заявка удалена');
-                            } else {
-                                alert('Ошибка удаления');
-                            }
-                        }}
-                    >
-                        Удалить
-                    </span>
-                ) : null}
+                <h2>Статус: {getProcessStatusInMagazine(editApplication.application.request_processed)}</h2>
                 <FormField
                     id="name"
                     textLabel="Имя организации"
@@ -143,6 +119,11 @@ export const EditApplication = (): React.JSX.Element => {
                     value={'Вернуться назад'}
                     onClick={() => navigate(-1)}
                 />
+                {editApplication.application.request_processed === 'IN_PROCESS' ? (
+                    <span className={styles.application__delete} onClick={deleteApplication}>
+                        Удалить заявку
+                    </span>
+                ) : null}
             </form>
         </section>
     );
