@@ -1,4 +1,4 @@
-import { store } from '../../redux/store';
+import { store } from '../redux/store';
 
 export const loadMagazine = async () => {
     const state = store.getState();
