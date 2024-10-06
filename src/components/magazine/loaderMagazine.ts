@@ -1,23 +1,23 @@
-import { defer } from 'react-router';
 import { store } from '../../redux/store';
 
-const loadMagazine = async () => {
+export const loadMagazine = async () => {
     const state = store.getState();
-    const guid = state.userState.user.guid;
+    const guid_user: string = state.userState.user.guid;
+    const currentPage: number = state.paginationState.page;
+    const countElementsPage: number = state.paginationState.countElements;
 
-    const response = await fetch('/api/getMagazine', {
+    const query = new URLSearchParams({
+        guid_user,
+        currentPage: currentPage.toString(),
+        countElementsPage: countElementsPage.toString(),
+    }).toString();
+
+    const response = await fetch(`/api/getMagazine?${query}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${guid}`,
         },
     });
 
     return response.json();
-};
-
-export const loaderMagazine = () => {
-    return defer({
-        magazine: loadMagazine(),
-    });
 };

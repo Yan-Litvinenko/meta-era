@@ -86,7 +86,6 @@ export function deleteApplication(req: Request, res: Response) {
         }
 
         MockDataBase.users[indexUser].magazine.splice(indexApplication, 1);
-        console.log(`Успешное удаление из БД элемента`);
         return res.status(200).send(true);
     } catch (error) {
         console.error('Ошибка при удалении заявки:', error);
@@ -96,10 +95,24 @@ export function deleteApplication(req: Request, res: Response) {
 
 export function getMagazine(req: Request, res: Response) {
     try {
-        const guid = req.headers['authorization']?.split(' ')[1];
-        const magazine = MockDataBase.users.find((user) => user.guid === guid)?.magazine;
-        return res.status(200).send({ magazine });
+        const { guid_user, countElementsPage, currentPage } = req.query;
+
+        const parsedCountElementsPage = parseInt(countElementsPage as string, 10);
+        const parsedCurrentPage = parseInt(currentPage as string, 10);
+        const magazine = MockDataBase.users.find((user) => user.guid === guid_user)?.magazine;
+
+        if (!magazine) {
+            return res.status(404).send({ error: 'Magazine not found' });
+        }
+
+        const startIndex = (parsedCurrentPage - 1) * parsedCountElementsPage;
+        const result = magazine.slice(startIndex, startIndex + parsedCountElementsPage);
+
+        return res
+            .status(200)
+            .send({ magazine: result, maxPage: Math.ceil(magazine.length / Number(countElementsPage)) });
     } catch (error) {
+        console.error(error);
         return res.status(500).send(false);
     }
 }

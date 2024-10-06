@@ -4,7 +4,6 @@ import { App } from './components/app/App';
 import { EditApplication } from './components/editAppplication/EditApplication';
 import { Authorization } from './components/authorization/Authorization';
 import { Layout } from './components/layout/Layout';
-import { loaderMagazine } from './components/magazine/loaderMagazine';
 import { Magazine } from './components/magazine/Magazine';
 import { Provider } from 'react-redux';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
@@ -17,8 +16,8 @@ const router = createBrowserRouter(
         <Route element={<App />} path="/">
             <Route element={<Authorization />} index />
             <Route element={<Layout />}>
-                <Route element={<Magazine />} path="magazine" loader={loaderMagazine} index />
-                <Route element={<EditApplication />} path="magazine/:guid" />
+                <Route element={<Magazine />} path="magazine/:page" index />
+                <Route element={<EditApplication />} path="magazine/:page/:guid" />
             </Route>
         </Route>,
     ),

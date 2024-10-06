@@ -39,7 +39,7 @@ export const useAuthorization = (): UseAuthorization => {
 
             if (result?.status) {
                 dispatch(setUser({ name: data.name, guid: result?.guid || guid, magazine: [] }));
-                navigate('/magazine');
+                navigate('/magazine/1');
             } else {
                 console.log('Не успешная авторизация');
             }

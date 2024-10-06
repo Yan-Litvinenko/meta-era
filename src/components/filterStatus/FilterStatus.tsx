@@ -29,6 +29,7 @@ export const FilterStatus = () => {
             <div className={styles.filter__content}>
                 {statuses.map(({ id, label }) => (
                     <FormField
+                        key={id}
                         labelClass={styles.filter__label}
                         id={id}
                         textLabel={label}

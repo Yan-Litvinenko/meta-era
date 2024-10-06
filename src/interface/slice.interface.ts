@@ -17,6 +17,12 @@ export type ModalSlice = {
     };
 };
 
+export type PaginationSlice = {
+    page: number;
+    countElements: number;
+    maxPage: number;
+};
+
 export type StatusApplicationFilter = 'NEW' | 'IN_PROCESS' | 'FINISHED' | 'REJECTED' | 'ALL';
 export type TaxPeriodFilter = TaxPeriod | 'ALL';
 export type DocumentTypeFilter = DocumentType | 'ALL';
