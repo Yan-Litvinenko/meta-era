@@ -4,5 +4,5 @@ import type { AppDispatch } from '../redux/store';
 
 export const useLogout = (): void => {
     const dispatch = useDispatch<AppDispatch>();
-    dispatch(setUser({ name: '', guid: '', magazine: [] }));
+    dispatch(setUser({ name: '', guid: '' }));
 };

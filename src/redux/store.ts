@@ -1,6 +1,7 @@
 import userSlice from './slice/userSlice';
-import modalSlice from './slice/modaSlice';
+import modalSlice from './slice/modalSlice';
 import filterSlice from './slice/filterSlice';
+import triggerSlice from './slice/triggerSlice';
 import paginationSlice from './slice/paginationSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
@@ -11,6 +12,7 @@ const store = configureStore({
         modalState: modalSlice,
         filterState: filterSlice,
         paginationState: paginationSlice,
+        triggerState: triggerSlice,
     },
 });
 

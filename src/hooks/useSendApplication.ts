@@ -1,7 +1,7 @@
 import { generateGUID } from '../helpers/generateGUID';
 import { useFileData } from '../hooks/useFileData';
 import { useForm } from 'react-hook-form';
-import { close } from '../redux/slice/modaSlice';
+import { close } from '../redux/slice/modalSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { userSelector } from '../redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';

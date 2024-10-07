@@ -8,21 +8,22 @@ export function authorization(req: Request, res: Response) {
         return res.status(405).send('Method Not Allowed');
     }
 
-    const newUser: UserSlice & { password: string } = req.body;
+    const dataUser: UserSlice & { password: string } = req.body;
 
-    if (!newUser) {
+    if (!dataUser) {
         return res.status(400).send('No user data provided');
     }
 
-    const hasUser: number = MockDataBase.users.findIndex((user) => {
-        return user.name === newUser.name && user.password === newUser.password;
+    const indexUser: number = MockDataBase.users.findIndex((user) => {
+        return user.name === dataUser.name && user.password === dataUser.password;
     });
 
     try {
-        if (hasUser >= 0) {
-            return res.status(201).send({ guid: MockDataBase.users[hasUser].guid, status: true });
+        if (indexUser >= 0) {
+            return res.status(201).send({ guid: MockDataBase.users[indexUser].guid, status: true });
         }
 
+        const newUser = { ...dataUser, magazine: [], archive: [] };
         MockDataBase.users.push(newUser);
         return res.status(201).send({ status: true });
     } catch (error) {
@@ -52,7 +53,9 @@ export function editApplication(req: Request, res: Response) {
         const guidUser: string = req.body[1].guid_user;
         const updateApplication = req.body[0] as Application;
 
-        const user: UserSlice & { password: string } = MockDataBase.users.find((user) => user.guid === guidUser)!;
+        const user: UserSlice & { password: string; magazine: Application[] } = MockDataBase.users.find(
+            (user) => user.guid === guidUser,
+        )!;
         const application = user.magazine.find(
             (item) => item.request_guid === updateApplication.request_guid,
         ) as Application;
@@ -111,6 +114,30 @@ export function getMagazine(req: Request, res: Response) {
         return res
             .status(200)
             .send({ magazine: result, maxPage: Math.ceil(magazine.length / Number(countElementsPage)) });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send(false);
+    }
+}
+
+export function getArchive(req: Request, res: Response) {
+    try {
+        const { guid_user, countElementsPage, currentPage } = req.query;
+
+        const parsedCountElementsPage = parseInt(countElementsPage as string, 10);
+        const parsedCurrentPage = parseInt(currentPage as string, 10);
+        const archive = MockDataBase.users.find((user) => user.guid === guid_user)?.archive;
+
+        if (!archive) {
+            return res.status(404).send({ error: 'Magazine not found' });
+        }
+
+        const startIndex = (parsedCurrentPage - 1) * parsedCountElementsPage;
+        const result = archive.slice(startIndex, startIndex + parsedCountElementsPage);
+
+        return res
+            .status(200)
+            .send({ archive: result, maxPage: Math.ceil(archive.length / Number(countElementsPage)) });
     } catch (error) {
         console.error(error);
         return res.status(500).send(false);

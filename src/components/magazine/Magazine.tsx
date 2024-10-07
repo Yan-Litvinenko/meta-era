@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './Magazine.module.scss';
-import { getProcessStatusInMagazine } from '../../helpers/getProcessStatus';
+import { getProcessStatus } from '../../helpers/getProcessStatus';
 import { nanoid } from '@reduxjs/toolkit';
+import { useToApplication } from '../../hooks/useToApplication';
 import { useMagazine } from '../../hooks/useMagazine';
-import type { StatusApplication } from '../../interface/file.interface';
 import type { Application } from '../../interface/application.interface';
 
 export const Magazine = (): React.JSX.Element => {
-    const { handleSort, toApplication, sortKey, sortOrder, application } = useMagazine();
+    const { handleSort, filter, sortKey, sortOrder, application } = useMagazine();
+    const toApplicationElement = useToApplication();
     const thead: Partial<Record<keyof Application, string>> = {
         request_date: 'Дата',
         request_name_organization: 'Название организации',
@@ -21,42 +22,35 @@ export const Magazine = (): React.JSX.Element => {
             <table className={styles.table}>
                 <thead>
                     <tr className={styles.table__row}>
-                        {(Object.keys(thead) as Array<keyof typeof thead>)
-                            .filter((key) => key in thead)
-                            .sort()
-                            .map((title) => (
-                                <th
-                                    className={styles.table__cell}
-                                    key={title}
-                                    onClick={() => handleSort(title)}
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    {thead[title]}
-                                    {sortKey === title && <span>{sortOrder === 'asc' ? ' 🔼' : ' 🔽'}</span>}
-                                </th>
-                            ))}
+                        {(Object.keys(thead) as Array<keyof typeof thead>).map((title) => (
+                            <th
+                                className={styles.table__cell}
+                                key={title}
+                                onClick={() => handleSort(title)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {thead[title]}
+                                {sortKey === title && <span>{sortOrder === 'asc' ? ' 🔼' : ' 🔽'}</span>}
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {application.map((itemMagazine) => (
+                    {filter(application).map((itemMagazine) => (
                         <tr
                             className={styles.table__row}
                             key={nanoid()}
-                            onClick={() => toApplication(`${itemMagazine.request_guid}`, itemMagazine)}
+                            onClick={() =>
+                                toApplicationElement(`${itemMagazine.request_guid}`, itemMagazine as Application, false)
+                            }
                         >
-                            {Object.entries(itemMagazine)
-                                .sort()
-                                .map(([key, value]) => {
-                                    if (key in thead) {
-                                        return (
-                                            <td className={styles.table__cell} key={nanoid()}>
-                                                {key === 'request_processed'
-                                                    ? getProcessStatusInMagazine(value as StatusApplication)
-                                                    : value.toString()}
-                                            </td>
-                                        );
-                                    }
-                                })}
+                            <td className={styles.table__cell}>{(itemMagazine as Application).request_date}</td>
+                            <td className={styles.table__cell}>
+                                {(itemMagazine as Application).request_name_organization}
+                            </td>
+                            <td className={styles.table__cell}>
+                                {getProcessStatus((itemMagazine as Application).request_processed)}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

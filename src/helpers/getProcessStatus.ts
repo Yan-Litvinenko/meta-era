@@ -1,6 +1,6 @@
 import type { StatusApplication } from '../interface/file.interface';
 
-export const getProcessStatusInMagazine = (status: StatusApplication) => {
+export const getProcessStatus = (status: StatusApplication) => {
     const states = {
         FINISHED: 'Обработана',
         IN_PROCESS: 'Не обработана',

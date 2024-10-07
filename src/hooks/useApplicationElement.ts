@@ -6,11 +6,17 @@ import { userSelector } from '../redux/selectors';
 import { useSelector } from 'react-redux';
 import { loadFilesIntoInput } from '../helpers/loadFileIntoInput';
 import type { Application, FormSendApplication } from '../interface/application.interface';
+import { ArchiveRecording } from '../interface/archive.interface';
 
-export const useEditApplication = () => {
+export const useApplicationElement = () => {
     const { guid } = useSelector(userSelector);
     const location = useLocation();
-    const application = location.state?.application as Application;
+    const isArchive = location.state?.isArchive as Boolean;
+    let application = location.state?.item;
+
+    isArchive
+        ? (application = location.state.item as ArchiveRecording)
+        : (application = location.state.item as Application);
 
     const {
         register,
@@ -92,6 +98,7 @@ export const useEditApplication = () => {
         setFileData,
         register,
         fileData,
+        isArchive,
         name,
         comment,
         errors,

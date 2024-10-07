@@ -11,15 +11,15 @@ import { Pagination } from '../pagination/Pagination';
 export const Layout = (): React.JSX.Element => {
     const location = useLocation();
     const { application } = useSelector(modalSelector);
-    const isEdit: boolean = location.pathname.slice(1).split('/').length === 3;
+    const isApplicationItemPath: boolean = location.pathname.slice(1).split('/').length === 3;
 
     return (
         <>
             <AuthProvider>
                 <Header />
-                <FilterPanel />
+                {isApplicationItemPath ? null : <FilterPanel />}
                 <Outlet />
-                {isEdit ? null : <Pagination />}
+                {isApplicationItemPath ? null : <Pagination />}
             </AuthProvider>
             {application ? <SendApplication /> : null}
         </>

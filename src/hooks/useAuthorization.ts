@@ -32,13 +32,13 @@ export const useAuthorization = (): UseAuthorization => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...data, guid, magazine: [] }),
+                body: JSON.stringify({ ...data, guid }),
             });
 
             const result = await response.json();
 
             if (result?.status) {
-                dispatch(setUser({ name: data.name, guid: result?.guid || guid, magazine: [] }));
+                dispatch(setUser({ name: data.name, guid: result?.guid || guid }));
                 navigate('/magazine/1');
             } else {
                 console.log('Не успешная авторизация');

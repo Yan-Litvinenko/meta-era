@@ -1,10 +1,9 @@
 import type { Application } from './application.interface';
-import type { TaxPeriod } from './file.interface';
+import type { TaxPeriod } from './archive.interface';
 
 export type UserSlice = {
     name: string;
     guid: string;
-    magazine: Application[];
 };
 
 export type MagazineSlice = {

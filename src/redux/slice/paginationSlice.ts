@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PaginationSlice } from '../../interface/slice.interface';
+import type { PaginationSlice } from '../../interface/slice.interface';
 
 const initialState: PaginationSlice = {
     page: 1,
-    countElements: 5,
+    countElements: 30,
     maxPage: 0,
 };
 

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { paginationSelector } from '../redux/selectors';
 import { setPage, setCountElement } from '../redux/slice/paginationSlice';
 import { useLocation } from 'react-router-dom';
+import { setTrigger } from '../redux/slice/triggerSlice';
 
 export const usePagination = () => {
     const dispatch = useDispatch();
@@ -42,6 +43,7 @@ export const usePagination = () => {
         event.preventDefault();
         dispatch(setCountElement(count));
         dispatch(setPage(1));
+        dispatch(setTrigger());
         navigate(`/${staticPath}/1`);
     };
 
