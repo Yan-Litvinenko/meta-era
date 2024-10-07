@@ -21,7 +21,7 @@ const router = createBrowserRouter(
                 <Route element={<Archive />} path="archive/:page" />
                 <Route element={<ApplicationItem />} path="magazine/:page/:guid" />
                 <Route element={<ApplicationItem />} path="archive/:page/:guid" />
-                {/* Я знаю, правильно было бы сделать 3 динамичных путя */}
+                {/* Я знаю, правильно было бы сделать 3 динамичных элемента */}
             </Route>
         </Route>,
     ),
